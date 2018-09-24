@@ -50,10 +50,10 @@
                     var animated = results[j].images.fixed_width.url;
                     var still = results[j].images.fixed_width_still.url;
                     var p = $("<p>").text("Rating: " + rating);
-                    var personImage = $("<img>");
-                    personImage.attr("src", animated);
+                    var animalImage = $("<img>");
+                    animalImage.attr("src", animated);
                     newDiv.append(p);
-                    newDiv.append(personImage);
+                    newDiv.append(animalImage);
                     $(".images").prepend(newDiv);
 
                 }
@@ -78,7 +78,7 @@
         })
         $(document).on("click", ".animal", displayAnimals);
         animalButtons();
-        $("button").addClass("m-2");
+        $("button").addClass("m-2 p-2");
     </script>
 </body>
 

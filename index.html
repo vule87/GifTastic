@@ -35,27 +35,33 @@
         crossorigin="anonymous"></script>
     <script type="text/javascript">
         var animals = ["Monkey", "Cat", "Dog"];
-
         function displayAnimals() {
             var animal = $(this).attr("data-name");
-
             queryUrl = ("https://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=QJQD1UslEUX2LMlux7LXTQ6Nh1wzlddH&limit=10");
-
             $.ajax({
                 url: queryUrl,
                 method: "GET"
-            }).then(function (event){
-                var animated = event.data[0].images.fixed_width.url
-                var still = event.data[0].images.fixed_width_still.url
-                console.log(animated);
-                $(".images").append($("<img>").attr("src", animated));
+            }).then(function (event) {
+                var results = event.data
+                $(".images").html("");
+                for (j = 0; j < results.length; j++) {
+                    newDiv = $("<div>");
+                    var rating = results[j].rating;
+                    var animated = results[j].images.fixed_width.url;
+                    var still = results[j].images.fixed_width_still.url;
+                    var p = $("<p>").text("Rating: " + rating);
+                    var personImage = $("<img>");
+                    personImage.attr("src", animated);
+                    newDiv.append(p);
+                    newDiv.append(personImage);
+                    $(".images").prepend(newDiv);
+
+                }
             });
-
         }
-
-        function animalButtons(){
+        function animalButtons() {
             $(".animal-names").empty();
-            for (i=0; i<animals.length; i++){
+            for (i = 0; i < animals.length; i++) {
                 var a = $("<button>");
                 a.addClass("animal m-2");
                 a.attr("data-name", animals[i]);
@@ -63,22 +69,16 @@
                 $(".animal-names").append(a);
             }
         }
-
-        $("#add-animal").on("click", function(event1) {
-        event.preventDefault();
-        var animal = $("#gifs").val().trim();
-        animals.push(animal);
-        console.log(animals);
-        animalButtons();
+        $("#add-animal").on("click", function (event1) {
+            event1.preventDefault();
+            var animal = $("#gifs").val().trim();
+            animals.push(animal);
+            console.log(animals);
+            animalButtons();
         })
-
         $(document).on("click", ".animal", displayAnimals);
         animalButtons();
-
         $("button").addClass("m-2");
-
-
-
     </script>
 </body>
 
